@@ -1,0 +1,218 @@
+.header{
+    width: 100%;
+    height: 50px;
+    background-color: #EAEAEA;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.logo{
+
+    width: 5%;
+    height: 100%;
+}
+@media screen and (max-width: 580px) {
+
+    .logo{
+        display: none;
+    }
+    .header{
+        justify-content: center;
+    }
+    .parma-info-logo{
+        display: hidden;
+    }
+
+
+  }
+.row{
+
+    padding-right: 50px;
+    display: flex;
+    gap: 41px;
+}
+.col{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 39px;
+    color: #646464;
+    cursor: pointer;
+}
+.col:hover{
+    color: #ED1C24;
+    transition: 0.25s;
+}
+.main{
+    width: 100%;
+    height: auto;
+    min-height: 604px;
+    background: url("../images/main_bg.jpg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.main-text{
+    width: 80%;
+    height: auto;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 59px;
+    text-align: center;
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+     text-shadow: 3px 3px 0px black;
+}
+.main-button{
+    width: 230px;
+    height: 55px;
+    border-radius: 10px;
+    background-color: #ED1C24;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    margin-top: 20px;
+    transition: 0.25s;
+    cursor: pointer;
+    text-decoration: none;
+}
+.main-button:hover{
+    background-color: white;
+    color: #ED1C24;
+
+}
+.parma-info{
+    width: 100%;
+    min-height: 1080px;
+    height: auto;
+    background: linear-gradient(180deg, #ED1C24 35.42%, #B3040A 100%);
+}
+.parma-info-logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+
+}
+.parma-info-subtitle{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.parma-info-subtitle-text{
+    padding-top: 10px;
+    width: 70%;
+    text-align: center;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 39px;
+    color: white;
+}
+.parma-info-blocks{
+    padding-top: 50px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+
+}
+.parma-info-block{
+    width: 320px;
+    height: 236px;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+.parma-block-text{
+    font-size: 18px;
+    font-weight: 700;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    color: #818181;
+    cursor: default;
+}
+.parma_blocks_trio{
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.contacts{
+    width: 100%;
+    height: 900px;
+    background: url("../images/contacts_bg.png");
+    background-size: cover;
+
+}
+.contacts-title{
+    font-size: 50px;
+    font-weight: 700;
+    color: #5E5E5E;
+    padding-left: 15%;
+    background-color: rgba(255, 255, 255, 0.7);
+
+}
+.contacts-blocks{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+.contact-block{
+    margin-top: 50px;
+    width: 420px;
+    height: 350px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.contact-block-title{
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    cursor: default;
+    font-size: 42px;
+    font-weight: 700;
+    color: #EE1D25;
+    padding-left: 50px;
+}
+/* .contact-block-text{
+
+} */
+.contact-block-text1{
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    cursor: default;
+    font-size: 32px;
+    font-weight: 600;
+    color: #818181; 
+    padding-bottom: 10px;
+    padding-left: 50px;
+}
+.contact-block-text2{
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    cursor: default;
+    font-size: 32px;
+    font-weight: 600;
+    color: #818181;
+    padding-left: 50px;
+}

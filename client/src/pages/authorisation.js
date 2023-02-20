@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 import '../styles/global.css'
 import '../styles/login.css'
-
+export let User_Id = 15;
 
 
 export default function Auth()   {
@@ -13,18 +14,22 @@ export default function Auth()   {
       .then((response) => response.json())
       .then((data) => {
         setUserData(data);
+        User_Id = data.id
       });
   }, []); 
+  const navigate = useNavigate();
   const AuthClick = () => {
-    console.log(UserData)
+    User_Id = UserData.id
+    navigate('/user')
+    
   }
   return (
-    <div class="container">
-      <div class="login-block">
-        <div class="login-title">Добро пожаловать</div>
-        <div class="login-inputs">
-          <input type="text" ref={AuthLogin} placeholder="Логин"/>
-          <input type="text" ref={AuthPassword} placeholder="Пароль"/>
+    <div className="containerr">
+      <div className="login-block">
+        <div className="login-title">Добро пожаловать</div>
+        <div className="login-inputs">
+          <input defaultValue="user13" type="text" ref={AuthLogin} placeholder="Логин"/>
+          <input defaultValue="pass13" type="text" ref={AuthPassword} placeholder="Пароль"/>
         </div>
         <div className='login-button' onClick={AuthClick}>Войти</div>
       </div>

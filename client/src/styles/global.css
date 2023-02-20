@@ -31,6 +31,9 @@ dl,
 dd {
   margin: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* Выставляем основные настройки по-умолчанию для body */
 body {
@@ -44,10 +47,10 @@ body {
   justify-content: center;
 }
 .Box {
-  min-height: 100%;
+  height: auto;
 }
 .container{
-    width: 100%;
+  width: 100%;
 }
 /* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
 ul[class],

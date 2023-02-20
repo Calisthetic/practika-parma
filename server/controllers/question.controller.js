@@ -9,13 +9,22 @@ class QuestionController {
         res.json(newQuest.rows[0])
     }
     async getQuestsByTest(req, res) {
-        const id = req.query.test
-        if (id === null || id === '' || id === undefined) { 
-            const users = await db.query(`SELECT * FROM questions`)
-            res.json(users.rows)
-        } else {
-            const quests = await db.query('select * from questions where test_id = $1', [id])
-            res.json(quests.rows)
+        try {
+            const id = req.query.test
+            const limit = req.query.limit
+            console.log(limit)
+            if (id !== undefined) { 
+                const quests = await db.query('select * from questions where test_id = $1', [id])
+                res.json(quests.rows)
+            } else if (limit !== undefined) {
+                const quests = await db.query('SELECT * FROM questions LIMIT $1', [limit]) 
+                res.json(quests.rows)
+            } else {
+                const quests = await db.query('SELECT * FROM questions')
+                res.json(quests.rows)
+            }
+        } catch(e) {
+            res.json([])
         }
     }
     async updateQuest(req, res) {

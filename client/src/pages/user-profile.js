@@ -4,58 +4,65 @@ import "../styles/user-profile.css"
 import QuestCounter from "../components/quest-couner";
 import RightAnswersCounter from "../components/right-answers";
 import TestPassDate from "../components/test-pass-date";
+import { User_Id as UserId} from "./authorisation.js";
+import { Link } from "react-router-dom";
 
-export default function UserProfile(props) {
+export const User_Id = UserId
+export let Test_Id = 15
+
+export default function UserProfile() {
   // Должность пользователя
   const [DivisionByUserIdData, setDivisionByUserIdData] = useState([{}]);
   useEffect(() => {
-    fetch("api/division?user_id=" + props.UserId, { method: "GET" })
+    fetch("api/division?user_id=" + UserId, { method: "GET" })
       .then((response) => response.json())
       .then((data) => {
         setDivisionByUserIdData(data);
       });
-  }, [props.UserId]); 
+  }, []); 
 
   // Данные пользователя
   const [UserData, setUserData] = useState([{}]);
   useEffect(() => { 
-    fetch("api/user/" + props.UserId, { method: "GET" })
+    fetch("api/user/" + UserId, { method: "GET" })
       .then((response) => response.json())
       .then((data) => {
         setUserData(data);
       });
-  }, [props.UserId]);
+  }, []);
 
   // Данные непройденных тестов
   const [NoCompletedTestData, setNoCompletedTestData] = useState([{}])
   
   useEffect(() => {
-    fetch("/api/test?user_id=" + props.UserId + "&completed=false", {method: 'GET'}).then(
+    fetch("/api/test?user_id=" + UserId + "&completed=false", {method: 'GET'}).then(
       response => response.json()
     ).then(
       data => {
         setNoCompletedTestData(data)
       }
     )
-  }, [props.UserId])
+  }, [])
 
   // Данные пройденных тестов
   const [CompletedTestData, setCompletedTestData] = useState([{}])
   
   useEffect(() => {
-    fetch("/api/test?user_id=" + props.UserId + "&completed=true", {method: 'GET'}).then(
+    fetch("/api/test?user_id=" + UserId + "&completed=true", {method: 'GET'}).then(
       response => response.json()
     ).then(
       data => {
         setCompletedTestData(data)
       }
     )
-  }, [props.UserId])
+  }, [])
+  
 
+  
   return (
-    <div class="container">
-      <div class="header_profile">
-        <div class="logo-profile">
+    <div className="container">
+      <div className="header_profile">
+        <div className="logo-profile">
           <svg
             width="194"
             height="59"
@@ -89,15 +96,15 @@ export default function UserProfile(props) {
             />
           </svg>
         </div>
-        <div class="header-end">
-          <div class="podrazdelenie">{DivisionByUserIdData[0].title}</div>
-          <div class="stick"></div>
-          <div class="user-name">
-            <div class="name">{UserData.first_name}</div>
-            <div class="surname">{UserData.second_name}</div>
+        <div className="header-end">
+          <div className="podrazdelenie">{DivisionByUserIdData[0].title}</div>
+          <div className="stick"></div>
+          <div className="user-name">
+            <div className="name">{UserData.first_name}</div>
+            <div className="surname">{UserData.second_name}</div>
           </div>
-          <div class="avatar"></div>
-          <div class="exit">
+          <div className="avatar"></div>
+          <div className="exit">
             <svg
               width="29"
               height="29"
@@ -113,37 +120,37 @@ export default function UserProfile(props) {
           </div>
         </div>
       </div>
-      <div class="gov_menu">
-        <div class="podraz_results">
-          <div class="podraz_info">
-            <div class="podraz_title">Результаты подразделений</div>
+      <div className="gov_menu">
+        <div className="podraz_results">
+          <div className="podraz_info">
+            <div className="podraz_title">Результаты подразделений</div>
             <ol>
-              <li class="podraz_color_1">
-                <span class="podraz_name">Название отдела</span>
+              <li className="podraz_color_1">
+                <span className="podraz_name">Название отдела</span>
               </li>
-              <li class="podraz_color_2">
-                <span class="podraz_name">Название отдела</span>
+              <li className="podraz_color_2">
+                <span className="podraz_name">Название отдела</span>
               </li>
-              <li class="podraz_color_3">
-                <span class="podraz_name">Название отдела</span>
+              <li className="podraz_color_3">
+                <span className="podraz_name">Название отдела</span>
               </li>
-              <li class="podraz_color_4">
-                <span class="podraz_name">Название отдела</span>
+              <li className="podraz_color_4">
+                <span className="podraz_name">Название отдела</span>
               </li>
             </ol>
           </div>
-          <div class="podraz_diagrama">
-            <div class="diagrama"></div>
+          <div className="podraz_diagrama">
+            <div className="diagrama"></div>
           </div>
         </div>
-        <div class="tasks">
-          <div class="tasks_title">Задания</div>
-          <div class="tasks_row">
-            <div class="tasks_col">Название</div>
-            <div class="tasks_col">Вопросы</div>
+        <div className="tasks">
+          <div className="tasks_title">Задания</div>
+          <div className="tasks_row">
+            <div className="tasks_col">Название</div>
+            <div className="tasks_col">Вопросы</div>
           </div>
           <div className="tests">
-            {(typeof NoCompletedTestData[0].id === 'undefined') ? (
+            {(typeof NoCompletedTestData[0] === 'undefined') ? (
               <p>Loading...</p>
             ) : (
               Object.keys(NoCompletedTestData).map(item => (
@@ -155,35 +162,37 @@ export default function UserProfile(props) {
                   <div className="test_value">
                     {<QuestCounter TestId={NoCompletedTestData[item].id}/>}
                   </div>
-                  <div className="test_go">
-                    &gt;
-                  </div>
+                  <Link to="/test">
+                    <div className="test_go" onClick={() => {Test_Id = NoCompletedTestData[item].id}}>
+                      &gt;
+                    </div>
+                  </Link>
                 </div>
               ))
             )}
           </div>
         </div>
 
-        <div class="results">
-          <div class="results_name">Результаты</div>
-          <div class="results_row">
-            <div class="results_col">Дата</div>
-            <div class="results_col">Название</div>
-            <div class="results_col">Вопросы</div>
-            <div class="results_col">Ответы</div>
+        <div className="results">
+          <div className="results_name">Результаты</div>
+          <div className="results_row">
+            <div className="results_col">Дата</div>
+            <div className="results_col">Название</div>
+            <div className="results_col">Вопросы</div>
+            <div className="results_col">Ответы</div>
           </div>
-            {(typeof CompletedTestData[0].id === 'undefined') ? (
-              <p>Loading...</p>
+            {(typeof CompletedTestData[0] === undefined || JSON.stringify(CompletedTestData[0]) == "{}") ? (
+              <p>Нет пройденных тестов</p>
             ) : (
               Object.keys(CompletedTestData).map(item => (
-                <div class="result" key={item}>
-                  <div class="result_col_data"><TestPassDate UserId={props.UserId} TestId={CompletedTestData[item].id}/></div>
-                  <div class="result_col">
-                    <div class="result_col_name">{CompletedTestData[item].title}</div>
-                    <div class="result_col_subtitle">{CompletedTestData[item].describe}</div>
+                <div className="result" key={item}>
+                  <div className="result_col_data"><TestPassDate UserId={UserId} TestId={CompletedTestData[item].id}/></div>
+                  <div className="result_col">
+                    <div className="result_col_name">{CompletedTestData[item].title}</div>
+                    <div className="result_col_subtitle">{CompletedTestData[item].describe}</div>
                   </div>
-                  <div class="result_col_questions">{<QuestCounter TestId={CompletedTestData[item].id}/>}</div>
-                  <div class="result_col_answers"><RightAnswersCounter UserId={props.UserId} TestId={CompletedTestData[item].id}/></div>
+                  <div className="result_col_questions">{<QuestCounter TestId={CompletedTestData[item].id}/>}</div>
+                  <div className="result_col_answers"><RightAnswersCounter UserId={UserId} TestId={CompletedTestData[item].id}/></div>
                 </div>
               ))
             )}

@@ -23,7 +23,8 @@ router.put('/test', testController.updateTest)
 router.delete('/test/:id', testController.deleteTest)
 
 router.post('/quest', questionController.createQuest)
-router.get('/quest', questionController.getQuestsByTest)
+router.get('/quest', questionController.getQuestsByTest) //! All || by test
+router.get('/quest/:id', questionController.getOneQuest)
 router.put('/quest', questionController.updateQuest)
 router.delete('/quest/:id', questionController.deleteQuest)
 

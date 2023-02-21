@@ -20,16 +20,18 @@ class DivisionController {
             } else {
                 const user_division_id = await db.query('select * from users where id = $1', [user_id]) 
                 const division = await db.query('select * from divisions where id = $1', [user_division_id.rows[0].division_id])
-                res.json(division.rows) 
+                if (division.rows[0] === undefined) {res.json([{}])} else {res.json(division.rows)}
+                //res.json(division.rows) 
             }
         } catch(e) {
-            res.json([])
+            res.json([{}])
         }
     }
     async getOneDivision(req, res) {
         const id = req.params.id
         const division = await db.query('SELECT * FROM divisions where id = $1', [id])
-        res.json(division.rows[0])
+        if (division.rows[0] === undefined) {res.json([{}])} else {res.json(division.rows[0])}
+        //res.json(division.rows[0])
     } 
     async updateDivision(req, res) {
         const {id, title} = req.body

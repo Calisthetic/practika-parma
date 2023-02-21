@@ -9,8 +9,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
 } from "react-router-dom";
+import TestCreate from './pages/test-create';
 
 function App() {
 
@@ -36,7 +36,8 @@ function App() {
             <Route path='/' element={<Home/>}></Route>
             <Route path="/auth" element={<Auth/>}></Route>
             <Route path='/user' element={<UserProfile/>}></Route>
-            <Route path='/test' element={<TestPass/>}></Route>
+            <Route path='/user/test' element={<TestPass/>}></Route>
+            <Route path='/testcreate' element={<TestCreate/>}></Route>
           </Routes>
       </Router>
     </div> 

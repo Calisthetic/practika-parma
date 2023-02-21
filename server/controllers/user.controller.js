@@ -22,19 +22,19 @@ class UserController {
         try {
             const division_id = req.query.division
             const login = req.query.login
-            const password = req.query.password
+            const password = req.query.password 
             if (division_id !== undefined) {
                 const users = await db.query('select * from users where division_id = $1', [division_id])
                 res.json(users.rows)
             } else if (login !== undefined && password !== undefined) {
                 const users = await db.query('select * from users where login = $1 and password = $2', [login, password])
-                res.json(users.rows[0])
+                if (users.rows[0] === undefined) {res.json([{}])} else {res.json(users.rows[0])}
             } else {
                 const users = await db.query(`SELECT * FROM users`)
                 res.json(users.rows)
             }
         } catch(e) {
-            res.json([])
+            res.json([{}])
         } 
     }
     async getOneUser(req, res) {

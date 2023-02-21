@@ -1,200 +1,78 @@
 import React, { useState, useEffect } from "react";
-import "../styles/global.css";
-//import "../styles/test-pass.css"
-import { User_Id as UserId} from "./authorisation.js";
-import { Test_Id as TestId} from "./user-profile.js";
+import s from "../styles/test-pass.module.css";
+//import { User_Id as UserId } from "./authorisation.js";
+import { Test_Id as TestId } from "./user-profile.js";
+import QuestExplorer from "../components/quest-explorer";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
-
+export let QuestionId = 1;
 export default function TestPass() {
+  // Все вопросы к тесту
+  const [QuestionsData, setQuestionsData] = useState([{}]);
+  useEffect(() => {
+    fetch("../api/quest?test=" + TestId, { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => {
+        setQuestionsData(data);
+      });
+  }, []);
+  
+  // Тест
+  const [TestData, setTestData] = useState([{}]);
+  useEffect(() => {
+    fetch("../api/test/" + TestId, { method: "GET" })
+      .then((response) => response.json())
+      .then((data) => {
+        setTestData(data);
+      });
+  }, []);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
+
+
   return (
-    <button onClick={console.log(TestId)}></button>
-  )
-  
-  // // Должность пользователя
-  // const [DivisionByUserIdData, setDivisionByUserIdData] = useState([{}]);
-  // useEffect(() => {
-  //   fetch("api/division?user_id=" + UserId, { method: "GET" })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setDivisionByUserIdData(data);
-  //     });
-  // }, []); 
+    <div className={s.container}>
+      <div className={s.test_name}>
+        {TestData.title}
+      </div>
+      <div className={s.test_description}>
+        {TestData.describe}
+      </div>
+      
+      <div className={s.question_num}>
+        
+        {(typeof QuestionsData[0] === 'undefined' || JSON.stringify(QuestionsData[0]) === "{}") ? (
+          <p>Ошибка при загрузке вопросов</p>
+        ) : (
+          Object.keys(QuestionsData).map(item => (
+            <button key={QuestionsData[item].id} className={s.question_button}>{Number(item) + 1}</button>
+          ))
+        )}
+      </div>
+      <div className={s.options}>
+        <Slider {...settings}>
+          {(typeof QuestionsData[0] === 'undefined' || JSON.stringify(QuestionsData[0]) === "{}") ? (
+            <p>Ошибка при загрузке вопросов</p>
+          ) : (
+            Object.keys(QuestionsData).map(item => (
+              <QuestExplorer key={item} QuestId={QuestionsData[item].id}/>
+            ))
+          )}
+        </Slider>
+        
+        <div className={s.question_accept_button}>
+          <button className={s.accept_button}>Отправить</button>
+        </div>
+      </div>
+    </div>
+  );
 
-  // // Данные пользователя
-  // const [UserData, setUserData] = useState([{}]);
-  // useEffect(() => { 
-  //   fetch("api/user/" + UserId, { method: "GET" })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setUserData(data);
-  //     });
-  // }, []);
-
-  // // Данные непройденных тестов
-  // const [NoCompletedTestData, setNoCompletedTestData] = useState([{}])
-  
-  // useEffect(() => {
-  //   fetch("/api/test?user_id=" + UserId + "&completed=false", {method: 'GET'}).then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       setNoCompletedTestData(data)
-  //     }
-  //   )
-  // }, [])
-
-  // // Данные пройденных тестов
-  // const [CompletedTestData, setCompletedTestData] = useState([{}])
-  
-  // useEffect(() => {
-  //   fetch("/api/test?user_id=" + UserId + "&completed=true", {method: 'GET'}).then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       setCompletedTestData(data)
-  //     }
-  //   )
-  // }, [])
-  
-
-  
-  // return (
-  //   <div class="container">
-  //     <div class="header_profile">
-  //       <div class="logo-profile">
-  //         <svg
-  //           width="194"
-  //           height="59"
-  //           viewBox="0 0 194 59"
-  //           fill="none"
-  //           xmlns="http://www.w3.org/2000/svg"
-  //         >
-  //           <path
-  //             d="M104.175 10.9478C104.175 5.31732 99.6469 0.812969 93.9864 0.6521H74.9025V3.70862V29.9304H82.6654V21.0825H89.458L96.4123 29.9304H104.66L97.3827 20.4391C101.264 18.9912 104.175 15.2912 104.175 10.9478ZM82.6654 7.08688H93.016H93.6629H93.9864C95.9272 7.08688 97.5444 8.85645 97.5444 10.7869C97.5444 12.7173 95.9272 14.326 93.9864 14.4869H93.8247H93.016H82.6654V7.08688V7.08688Z"
-  //             fill="white"
-  //           />
-  //           <path
-  //             d="M19.4296 0.6521H0.345673V29.9304H8.10863V21.0825H19.2679C24.9284 21.0825 29.6185 16.4173 29.6185 10.7869C29.4568 5.31732 24.9284 0.812969 19.4296 0.6521ZM19.2679 14.6478H18.2975H7.94691V7.08688H18.2975H18.9444H19.2679C21.2086 7.08688 22.8259 8.85645 22.8259 10.7869C22.9877 12.8782 21.3704 14.4869 19.2679 14.6478Z"
-  //             fill="white"
-  //           />
-  //           <path
-  //             d="M53.0691 0.6521H45.4679L32.3679 29.9304H39.9691L41.5864 26.2304H56.9506L58.5679 29.9304H66.1691L53.0691 0.6521ZM54.0395 19.6347H44.6593L49.3494 9.17819L54.0395 19.6347Z"
-  //             fill="white"
-  //           />
-  //           <path
-  //             d="M186.333 29.9304H193.935L180.835 0.6521H173.233L160.133 29.9304H167.735L169.352 26.2304H184.554L186.333 29.9304ZM172.263 19.6347L176.953 9.17819L181.643 19.6347H172.263Z"
-  //             fill="white"
-  //           />
-  //           <path
-  //             d="M133.772 14.9695L123.744 0.6521H115.981V29.9304H123.583V13.0391L133.772 27.3564L143.799 13.0391V29.9304H151.4V0.6521H143.799L133.772 14.9695Z"
-  //             fill="white"
-  //           />
-  //           <path
-  //             d="M188.112 43.926C186.98 43.926 185.848 44.0869 184.878 44.4086V51.6478C184.878 52.7739 186.333 53.2565 188.112 53.2565C190.862 53.2565 191.67 52.2912 191.67 48.5912C191.67 44.5695 190.862 43.926 188.112 43.926ZM188.112 54.7043C186.495 54.7043 185.525 54.2217 184.878 53.7391V58.726H183.422V43.4434C184.716 42.7999 186.657 42.4782 188.112 42.4782C191.67 42.4782 193.288 43.7652 193.288 48.4304C193.288 53.2565 191.67 54.7043 188.112 54.7043ZM178.732 42.7999H180.188V53.7391C178.894 54.3826 176.953 54.7043 175.498 54.7043C172.101 54.7043 170.969 53.5782 170.969 49.3956V42.9608H172.425V49.0739C172.425 52.613 173.233 53.2565 175.659 53.2565C176.791 53.2565 177.762 53.0956 178.57 52.7739V42.7999H178.732ZM162.883 43.926C165.632 43.926 166.441 44.7304 166.441 48.5912C166.441 52.2912 165.47 53.2565 162.883 53.2565C160.133 53.2565 159.325 52.2912 159.325 48.5912C159.325 44.5695 160.133 43.926 162.883 43.926ZM162.883 54.7043C166.441 54.7043 168.22 53.2565 168.22 48.5912C168.22 43.926 166.602 42.6391 162.883 42.6391C159.325 42.6391 157.707 43.926 157.707 48.5912C157.546 53.2565 159.325 54.7043 162.883 54.7043ZM154.796 42.4782C153.179 42.4782 152.047 43.1217 151.562 43.6043V42.7999H150.106V54.2217H151.562V45.3739C151.562 44.2478 153.017 43.926 154.796 43.926C155.281 43.926 155.605 43.926 155.928 44.0869V42.6391C155.605 42.4782 155.281 42.4782 154.796 42.4782ZM142.181 43.926C143.314 43.926 144.446 44.0869 145.416 44.4086V51.6478C145.416 52.7739 143.96 53.2565 142.181 53.2565C139.432 53.2565 138.623 52.2912 138.623 48.5912C138.623 44.5695 139.432 43.926 142.181 43.926ZM146.872 43.4434C145.578 42.7999 143.637 42.4782 142.181 42.4782C138.623 42.4782 137.006 43.7652 137.006 48.4304C137.006 53.0956 138.623 54.5434 142.181 54.5434C143.799 54.5434 144.769 54.0608 145.416 53.5782C145.416 56.6347 143.96 57.4391 141.211 57.4391C140.402 57.4391 138.785 57.1173 137.977 56.7956L137.491 58.2434C138.3 58.5652 140.241 58.8869 141.211 58.8869C144.769 58.8869 146.872 57.7608 146.872 53.4173V43.4434ZM126.656 44.5695L127.141 43.1217C125.847 42.7999 124.391 42.4782 123.421 42.4782C120.348 42.4782 118.893 43.2826 118.893 46.0173C118.893 48.1086 120.348 48.913 123.259 49.0739C125.523 49.2347 126.17 49.8782 126.17 51.0043C126.17 52.7739 125.2 53.0956 123.259 53.0956C122.127 53.0956 120.348 52.7739 119.539 52.4521L119.054 53.8999C120.186 54.2217 122.127 54.5434 123.259 54.5434C126.332 54.5434 127.788 53.5782 127.788 51.0043C127.788 48.913 126.494 47.9478 123.583 47.7869C121.48 47.626 120.672 47.1434 120.672 46.0173C120.672 44.2478 121.642 43.926 123.583 43.926C124.553 43.926 125.685 44.0869 126.656 44.5695ZM111.777 43.926C113.879 43.926 114.688 44.5695 114.849 47.4652H108.38C108.38 44.7304 109.351 43.926 111.777 43.926ZM111.777 42.4782C108.38 42.4782 106.601 43.926 106.601 48.4304C106.601 53.0956 108.542 54.5434 111.938 54.5434C112.909 54.5434 114.526 54.2217 115.658 53.8999L115.335 52.613C114.364 52.9347 112.909 53.2565 112.1 53.2565C109.351 53.2565 108.218 52.4521 108.218 48.7521H116.467C116.467 43.7652 115.011 42.4782 111.777 42.4782ZM103.043 38.4565C102.235 38.4565 102.073 38.6173 102.073 39.4217C102.073 40.226 102.235 40.3869 103.043 40.3869C103.69 40.3869 104.014 40.226 104.014 39.4217C103.852 38.6173 103.69 38.4565 103.043 38.4565ZM103.69 54.3826H102.235V42.9608H103.69V54.3826ZM94.3099 43.926C95.442 43.926 96.5741 44.0869 97.5444 44.4086V51.6478C97.5444 52.7739 96.0889 53.2565 94.3099 53.2565C91.5605 53.2565 90.7518 52.2912 90.7518 48.5912C90.7518 44.5695 91.5605 43.926 94.3099 43.926ZM99 43.4434C97.7062 42.7999 95.7654 42.4782 94.3099 42.4782C90.7518 42.4782 89.1346 43.7652 89.1346 48.4304C89.1346 53.0956 90.7518 54.5434 94.3099 54.5434C95.9271 54.5434 96.8975 54.0608 97.5444 53.5782C97.5444 56.6347 96.0889 57.4391 93.3395 57.4391C92.5309 57.4391 90.9136 57.1173 90.1049 56.7956L89.6197 58.2434C90.4284 58.5652 92.3691 58.8869 93.3395 58.8869C96.8975 58.8869 99 57.7608 99 53.4173V43.4434ZM81.2099 43.926C83.9592 43.926 84.7679 44.7304 84.7679 48.5912C84.7679 52.2912 83.7975 53.2565 81.2099 53.2565C78.4605 53.2565 77.6518 52.2912 77.6518 48.5912C77.6518 44.5695 78.4605 43.926 81.2099 43.926ZM81.2099 54.7043C84.7679 54.7043 86.5469 53.2565 86.5469 48.5912C86.5469 43.926 84.9296 42.6391 81.2099 42.6391C77.6518 42.6391 76.0346 43.926 76.0346 48.5912C76.0346 53.2565 77.6518 54.7043 81.2099 54.7043ZM72.9617 37.813H71.5062V51.326C71.5062 52.9347 71.9913 53.7391 72.9617 54.7043L74.0938 53.7391C73.2852 52.9347 72.9617 52.4521 72.9617 51.326V37.813ZM63.258 43.926C66.0074 43.926 66.816 44.7304 66.816 48.5912C66.816 52.2912 65.8457 53.2565 63.258 53.2565C60.5086 53.2565 59.7 52.2912 59.7 48.5912C59.7 44.5695 60.6704 43.926 63.258 43.926ZM63.258 54.7043C66.816 54.7043 68.5951 53.2565 68.5951 48.5912C68.5951 43.926 66.9778 42.6391 63.258 42.6391C59.7 42.6391 58.0827 43.926 58.0827 48.5912C58.0827 53.2565 59.7 54.7043 63.258 54.7043ZM47.5704 44.2478C48.5407 43.926 49.3494 43.926 50.4815 43.926C53.0691 43.926 53.8778 44.5695 53.8778 48.1086V54.2217H55.3333V47.7869C55.3333 43.6043 54.2012 42.4782 50.8049 42.4782C49.3494 42.4782 47.4086 42.7999 46.1148 43.4434V54.3826H47.5704V44.2478ZM38.5136 42.4782C37.058 42.4782 35.7642 42.9608 35.1173 43.4434V37.9739H33.6617V54.3826H35.1173V45.5347C35.1173 44.4086 36.7346 43.926 38.3518 43.926C40.616 43.926 41.4247 44.5695 41.4247 48.1086V54.2217H42.8802V47.7869C42.8802 43.6043 41.5864 42.4782 38.5136 42.4782ZM30.9123 52.613C30.1037 52.9347 29.1333 53.2565 28.163 53.2565C25.4136 53.2565 24.2815 52.2912 24.2815 48.5912C24.2815 44.7304 25.5753 43.926 28.163 43.926C29.1333 43.926 30.1037 44.0869 30.9123 44.4086L31.3975 42.9608C30.5889 42.6391 29.1333 42.3173 28.163 42.3173C24.6049 42.3173 22.6642 43.6043 22.6642 48.2695C22.6642 52.9347 24.6049 54.3826 28.163 54.3826C29.1333 54.3826 30.5889 54.0608 31.3975 53.7391L30.9123 52.613ZM15.3864 43.926C17.4889 43.926 18.2975 44.5695 18.4593 47.4652H11.9901C11.9901 44.7304 12.9605 43.926 15.3864 43.926ZM15.3864 42.4782C11.9901 42.4782 10.2111 43.926 10.2111 48.4304C10.2111 53.0956 12.1518 54.5434 15.5481 54.5434C16.5185 54.5434 18.1358 54.2217 19.2679 53.8999L18.9444 52.613C17.9741 52.9347 16.5185 53.2565 15.7099 53.2565C12.9605 53.2565 11.8284 52.4521 11.8284 48.7521H20.0765C20.0765 43.7652 18.621 42.4782 15.3864 42.4782ZM3.9037 50.5217C3.9037 52.4521 4.38888 53.2565 6.00617 53.2565C6.81481 53.2565 7.62345 53.0956 8.27036 52.9347L8.59382 54.2217C7.94691 54.3826 6.81481 54.7043 6.00617 54.7043C3.41851 54.7043 2.44814 53.8999 2.44814 50.5217V44.2478H0.345673V42.9608H2.44814V40.5478L3.9037 39.9043V42.9608H8.10863V44.2478H3.9037C3.9037 44.2478 3.9037 50.5217 3.9037 50.5217Z"
-  //             fill="white"
-  //           />
-  //         </svg>
-  //       </div>
-  //       <div class="header-end">
-  //         <div class="podrazdelenie">{DivisionByUserIdData[0].title}</div>
-  //         <div class="stick"></div>
-  //         <div class="user-name">
-  //           <div class="name">{UserData.first_name}</div>
-  //           <div class="surname">{UserData.second_name}</div>
-  //         </div>
-  //         <div class="avatar"></div>
-  //         <div class="exit">
-  //           <svg
-  //             width="29"
-  //             height="29"
-  //             viewBox="0 0 29 29"
-  //             fill="none"
-  //             xmlns="http://www.w3.org/2000/svg"
-  //           >
-  //             <path
-  //               d="M12.0833 22.5556L9.82778 20.2194L13.9361 16.1111H0V12.8889H13.9361L9.82778 8.78056L12.0833 6.44444L20.1389 14.5L12.0833 22.5556ZM0 29V19.3333H3.22222V25.7778H25.7778V3.22222H3.22222V9.66667H0V0H29V29H0Z"
-  //               fill="white"
-  //             />
-  //           </svg>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div class="gov_menu">
-  //       <div class="podraz_results">
-  //         <div class="podraz_info">
-  //           <div class="podraz_title">Результаты подразделений</div>
-  //           <ol>
-  //             <li class="podraz_color_1">
-  //               <span class="podraz_name">Название отдела</span>
-  //             </li>
-  //             <li class="podraz_color_2">
-  //               <span class="podraz_name">Название отдела</span>
-  //             </li>
-  //             <li class="podraz_color_3">
-  //               <span class="podraz_name">Название отдела</span>
-  //             </li>
-  //             <li class="podraz_color_4">
-  //               <span class="podraz_name">Название отдела</span>
-  //             </li>
-  //           </ol>
-  //         </div>
-  //         <div class="podraz_diagrama">
-  //           <div class="diagrama"></div>
-  //         </div>
-  //       </div>
-  //       <div class="tasks">
-  //         <div class="tasks_title">Задания</div>
-  //         <div class="tasks_row">
-  //           <div class="tasks_col">Название</div>
-  //           <div class="tasks_col">Вопросы</div>
-  //         </div>
-  //         <div className="tests">
-  //           {(typeof NoCompletedTestData[0] === 'undefined') ? (
-  //             <p>Loading...</p>
-  //           ) : (
-  //             Object.keys(NoCompletedTestData).map(item => (
-  //               <div className="test" key={item}>
-  //                 <div className="test_name">
-  //                   <div className="test_title">{NoCompletedTestData[item].title}</div>
-  //                   <div className="test_subtitle">{NoCompletedTestData[item].describe}</div>
-  //                 </div>
-  //                 <div className="test_value">
-  //                   {<QuestCounter TestId={NoCompletedTestData[item].id}/>}
-  //                 </div>
-  //                 <div className="test_go">
-  //                   &gt;
-  //                 </div>
-  //               </div>
-  //             ))
-  //           )}
-  //         </div>
-  //       </div>
-
-  //       <div class="results">
-  //         <div class="results_name">Результаты</div>
-  //         <div class="results_row">
-  //           <div class="results_col">Дата</div>
-  //           <div class="results_col">Название</div>
-  //           <div class="results_col">Вопросы</div>
-  //           <div class="results_col">Ответы</div>
-  //         </div>
-  //           {(typeof CompletedTestData[0] === undefined || JSON.stringify(CompletedTestData[0]) == "{}") ? (
-  //             <p>jfjfjj</p>
-  //           ) : (
-  //             Object.keys(CompletedTestData).map(item => (
-  //               <div class="result" key={item}>
-  //                 <div class="result_col_data"><TestPassDate UserId={UserId} TestId={CompletedTestData[item].id}/></div>
-  //                 <div class="result_col">
-  //                   <div class="result_col_name">{CompletedTestData[item].title}</div>
-  //                   <div class="result_col_subtitle">{CompletedTestData[item].describe}</div>
-  //                 </div>
-  //                 <div class="result_col_questions">{<QuestCounter TestId={CompletedTestData[item].id}/>}</div>
-  //                 <div class="result_col_answers"><RightAnswersCounter UserId={UserId} TestId={CompletedTestData[item].id}/></div>
-  //               </div>
-  //             ))
-  //           )}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 }

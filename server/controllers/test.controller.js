@@ -21,7 +21,6 @@ class TestController {
                     const test = await db.query('SELECT * FROM tests where id = $1', [test_id.rows[i].test_id])
                     const result = await db.query('SELECT * FROM results where test_id = $1 and user_id = $2', [test_id.rows[i].test_id, user_id])
                     if (result.rows[0] === undefined) {
-                        console.log(result.rows[0])
                         test_list.push(JSON.parse((JSON.stringify(test.rows)).substr(1, JSON.stringify(test.rows).length - 2)))
                     } 
                 }
@@ -49,13 +48,14 @@ class TestController {
                 res.json(test_list)
             }
         } catch(e) {
-            res.json([])
+            res.json([{}])
         }
     }
     async getOneTest(req, res) {
         const id = req.params.id
         const test = await db.query(`SELECT * FROM tests where id = $1`, [id])
-        res.json(test.rows[0])
+        if (test.rows[0] === undefined) {res.json([{}])} else {res.json(test.rows[0])}
+        //res.json(test.rows[0])
     }
     async updateTest(req, res) {
         const {id, title, describe} = req.body

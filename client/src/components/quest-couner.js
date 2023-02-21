@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "../styles/user-profile.css"
 
 function QuestCounter(props) {
   const [QuestsData, setQuestsData] = useState([{}])

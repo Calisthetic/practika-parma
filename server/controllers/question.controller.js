@@ -12,10 +12,10 @@ class QuestionController {
         try {
             const id = req.query.test
             const limit = req.query.limit
-            console.log(limit)
             if (id !== undefined) { 
-                const quests = await db.query('select * from questions where test_id = $1', [id])
-                res.json(quests.rows)
+                const quests = await db.query('SELECT * FROM questions where test_id = $1', [id])
+                if (quests.rows[0] === undefined) {res.json([{}])} else {res.json(quests.rows)}
+                //res.json(quests.rows)
             } else if (limit !== undefined) {
                 const quests = await db.query('SELECT * FROM questions LIMIT $1', [limit]) 
                 res.json(quests.rows)
@@ -24,8 +24,14 @@ class QuestionController {
                 res.json(quests.rows)
             }
         } catch(e) {
-            res.json([])
+            res.json([{}])
         }
+    }
+    async getOneQuest(req, res) {
+        const id = req.params.id
+        const quest = await db.query('SELECT * FROM questions where id = $1', [id])
+        if (quest.rows[0] === undefined) {res.json([{}])} else {res.json(quest.rows[0])}
+        //res.send(quest.rows[0])
     }
     async updateQuest(req, res) {
         const {id, test_id, title, describe, first_answer, second_answer, third_answer, fourth_answer, correct_answer} = req.body

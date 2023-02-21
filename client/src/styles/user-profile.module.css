@@ -1,3 +1,6 @@
+.container{
+    width: 100%;
+}
 .header_profile{
     background-color: #333333;
     width: 100%;
@@ -6,13 +9,13 @@
     justify-content: space-between;
     align-items: center;
 }
-.logo-profile{
+.logo_profile{
     display: flex;
     align-items: center;
     justify-content: center;
     padding-left: 10px;
 }
-.header-end{ 
+.header_end{ 
     color: white;
     display: flex;
     gap: 10px;

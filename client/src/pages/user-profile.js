@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/global.css";
-import "../styles/user-profile.css"
+import s from "../styles/user-profile.module.css"
 import QuestCounter from "../components/quest-couner";
 import RightAnswersCounter from "../components/right-answers";
 import TestPassDate from "../components/test-pass-date";
 import { User_Id as UserId} from "./authorisation.js";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export const User_Id = UserId
-export let Test_Id = 15
+export let Test_Id = 0
 
 export default function UserProfile() {
   // Должность пользователя
@@ -60,9 +60,9 @@ export default function UserProfile() {
 
   
   return (
-    <div className="container">
-      <div className="header_profile">
-        <div className="logo-profile">
+    <div className={s.container}>
+      <div className={s.header_profile}>
+        <div className={s.logo_profile}>
           <svg
             width="194"
             height="59"
@@ -96,15 +96,15 @@ export default function UserProfile() {
             />
           </svg>
         </div>
-        <div className="header-end">
-          <div className="podrazdelenie">{DivisionByUserIdData[0].title}</div>
-          <div className="stick"></div>
-          <div className="user-name">
-            <div className="name">{UserData.first_name}</div>
-            <div className="surname">{UserData.second_name}</div>
+        <div className={s.header_end}>
+          <div className={s.podrazdelenie}>{DivisionByUserIdData[0].title}</div>
+          <div className={s.stick}></div>
+          <div className={s.user_name}>
+            <div className={s.name}>{UserData.first_name}</div>
+            <div className={s.surname}>{UserData.second_name}</div>
           </div>
-          <div className="avatar"></div>
-          <div className="exit">
+          <div className={s.avatar}></div>
+          <div className={s.exit}>
             <svg
               width="29"
               height="29"
@@ -120,50 +120,51 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="gov_menu">
-        <div className="podraz_results">
-          <div className="podraz_info">
-            <div className="podraz_title">Результаты подразделений</div>
+
+      <div className={s.gov_menu}>
+        <div className={s.podraz_results}>
+          <div className={s.podraz_info}>
+            <div className={s.podraz_title}>Результаты подразделений</div>
             <ol>
-              <li className="podraz_color_1">
-                <span className="podraz_name">Название отдела</span>
+              <li className={s.podraz_color_1}>
+                <span className={s.podraz_name}>Название отдела</span>
               </li>
-              <li className="podraz_color_2">
-                <span className="podraz_name">Название отдела</span>
+              <li className={s.podraz_color_2}>
+                <span className={s.podraz_name}>Название отдела</span>
               </li>
-              <li className="podraz_color_3">
-                <span className="podraz_name">Название отдела</span>
+              <li className={s.podraz_color_3}>
+                <span className={s.podraz_name}>Название отдела</span>
               </li>
-              <li className="podraz_color_4">
-                <span className="podraz_name">Название отдела</span>
+              <li className={s.podraz_color_4}>
+                <span className={s.podraz_name}>Название отдела</span>
               </li>
             </ol>
           </div>
-          <div className="podraz_diagrama">
-            <div className="diagrama"></div>
+          <div className={s.podraz_diagrama}>
+            <div className={s.diagrama}></div>
           </div>
         </div>
-        <div className="tasks">
-          <div className="tasks_title">Задания</div>
-          <div className="tasks_row">
-            <div className="tasks_col">Название</div>
-            <div className="tasks_col">Вопросы</div>
+        <div className={s.tasks}>
+          <div className={s.tasks_title}>Задания</div>
+          <div className={s.tasks_row}>
+            <div className={s.tasks_col}>Название</div>
+            <div className={s.tasks_col}>Вопросы</div>
           </div>
-          <div className="tests">
+          <div className={s.tests}>
             {(typeof NoCompletedTestData[0] === 'undefined') ? (
               <p>Loading...</p>
             ) : (
               Object.keys(NoCompletedTestData).map(item => (
-                <div className="test" key={item}>
-                  <div className="test_name">
-                    <div className="test_title">{NoCompletedTestData[item].title}</div>
-                    <div className="test_subtitle">{NoCompletedTestData[item].describe}</div>
+                <div className={s.test} key={item}>
+                  <div className={s.test_name}>
+                    <div className={s.test_title}>{NoCompletedTestData[item].title}</div>
+                    <div className={s.test_subtitle}>{NoCompletedTestData[item].describe}</div>
                   </div>
-                  <div className="test_value">
+                  <div className={s.test_value}>
                     {<QuestCounter TestId={NoCompletedTestData[item].id}/>}
                   </div>
-                  <Link to="/test">
-                    <div className="test_go" onClick={() => {Test_Id = NoCompletedTestData[item].id}}>
+                  <Link to="/user/test">
+                    <div className={s.test_go} onClick={() => {Test_Id = NoCompletedTestData[item].id}}>
                       &gt;
                     </div>
                   </Link>
@@ -173,26 +174,26 @@ export default function UserProfile() {
           </div>
         </div>
 
-        <div className="results">
-          <div className="results_name">Результаты</div>
-          <div className="results_row">
-            <div className="results_col">Дата</div>
-            <div className="results_col">Название</div>
-            <div className="results_col">Вопросы</div>
-            <div className="results_col">Ответы</div>
+        <div className={s.results}>
+          <div className={s.results_name}>Результаты</div>
+          <div className={s.results_row}>
+            <div className={s.results_col}>Дата</div>
+            <div className={s.results_col}>Название</div>
+            <div className={s.results_col}>Вопросы</div>
+            <div className={s.results_col}>Ответы</div>
           </div>
-            {(typeof CompletedTestData[0] === undefined || JSON.stringify(CompletedTestData[0]) == "{}") ? (
+            {(typeof CompletedTestData[0] === 'undefined' || JSON.stringify(CompletedTestData[0]) === "{}") ? (
               <p>Нет пройденных тестов</p>
             ) : (
               Object.keys(CompletedTestData).map(item => (
-                <div className="result" key={item}>
-                  <div className="result_col_data"><TestPassDate UserId={UserId} TestId={CompletedTestData[item].id}/></div>
-                  <div className="result_col">
-                    <div className="result_col_name">{CompletedTestData[item].title}</div>
-                    <div className="result_col_subtitle">{CompletedTestData[item].describe}</div>
+                <div className={s.result} key={item}>
+                  <div className={s.result_col_data}><TestPassDate UserId={UserId} TestId={CompletedTestData[item].id}/></div>
+                  <div className={s.result_col}>
+                    <div className={s.result_col_name}>{CompletedTestData[item].title}</div>
+                    <div className={s.result_col_subtitle}>{CompletedTestData[item].describe}</div>
                   </div>
-                  <div className="result_col_questions">{<QuestCounter TestId={CompletedTestData[item].id}/>}</div>
-                  <div className="result_col_answers"><RightAnswersCounter UserId={UserId} TestId={CompletedTestData[item].id}/></div>
+                  <div className={s.result_col_questions}>{<QuestCounter TestId={CompletedTestData[item].id}/>}</div>
+                  <div className={s.result_col_answers}><RightAnswersCounter UserId={UserId} TestId={CompletedTestData[item].id}/></div>
                 </div>
               ))
             )}

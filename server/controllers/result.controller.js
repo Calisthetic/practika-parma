@@ -29,7 +29,7 @@ class ResultController {
             }
             res.json(results.rows)
         } catch(e) {
-            res.json([])
+            res.json([{}])
         }
     }
     async deleteRusult(req, res) {

@@ -4,14 +4,15 @@ body{
 a{
     text-decoration: none;
 }
-.containerr{
+.container{
     display: flex;
     height: 100vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
-.login-block{
+.login_block{
     width: 500px;
     min-height: 401px;
     height: auto;
@@ -23,14 +24,14 @@ a{
     border-radius: 30px;
     gap: 20px;
 }
-.login-title{
+.login_title{
     font-weight: 800;
     font-size: 24px;
     line-height: 78px;
     color: #FF0202;
 
 }
-.login-inputs{
+.login_inputs{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -38,7 +39,7 @@ a{
     align-items: center;
     gap: 20px;
 }
-.login-inputs input{
+.login_inputs input{
     width: 70%;
     background-color: white;
     border: 0px;
@@ -47,7 +48,7 @@ a{
     cursor: text;
 
 }
-.login-block button{
+.login_block button{
     margin-top: 20px;
     cursor: pointer;
     width: 200px;
@@ -60,12 +61,12 @@ a{
 
 
 }
-.login-block button:hover{
+.login_block button:hover{
     background-color: white;
     color: #ED1C24;
     border: 1px solid #ED1C24;
 }
-.login-button{
+.login_button{
     width: 150px;
     height: 45px;
     border-radius: 10px;
@@ -81,7 +82,7 @@ a{
     cursor: pointer;
     text-decoration: none;
 }
-.login-button:hover{
+.login_button:hover{
     background-color: white;
     color: #ED1C24;
     outline: 1px solid #ED1C24;

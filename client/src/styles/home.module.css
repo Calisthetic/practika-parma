@@ -1,3 +1,6 @@
+.container{
+    width: 100%;
+}
 .header{
     width: 100%;
     height: 50px;
@@ -54,7 +57,7 @@
     align-items: center;
     flex-direction: column;
 }
-.main-text{
+.main_text{
     width: 80%;
     height: auto;
     font-size: 32px;
@@ -66,7 +69,7 @@
     padding-bottom: 20px;
      text-shadow: 3px 3px 0px black;
 }
-.main-button{
+.main_button{
     width: 230px;
     height: 55px;
     border-radius: 10px;
@@ -82,31 +85,30 @@
     cursor: pointer;
     text-decoration: none;
 }
-.main-button:hover{
+.main_button:hover{
     background-color: white;
     color: #ED1C24;
-
 }
-.parma-info{
+.parma_info{
     width: 100%;
     min-height: 1080px;
     height: auto;
     background: linear-gradient(180deg, #ED1C24 35.42%, #B3040A 100%);
 }
-.parma-info-logo{
+.parma_info_logo{
     display: flex;
     justify-content: center;
     align-items: center;
     padding-top: 20px;
 
 }
-.parma-info-subtitle{
+.parma_info_subtitle{
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.parma-info-subtitle-text{
+.parma_info_subtitle_text{
     padding-top: 10px;
     width: 70%;
     text-align: center;
@@ -115,7 +117,7 @@
     line-height: 39px;
     color: white;
 }
-.parma-info-blocks{
+.parma_info_blocks{
     padding-top: 50px;
     width: 100%;
     height: auto;
@@ -125,7 +127,7 @@
     flex-wrap: wrap;
 
 }
-.parma-info-block{
+.parma_info_block{
     width: 320px;
     height: 236px;
     background-color: white;
@@ -136,7 +138,7 @@
     text-align: center;
 
 }
-.parma-block-text{
+.parma_block_text{
     font-size: 18px;
     font-weight: 700;
     box-sizing: border-box;
@@ -159,7 +161,7 @@
     background-size: cover;
 
 }
-.contacts-title{
+.contacts_title{
     font-size: 50px;
     font-weight: 700;
     color: #5E5E5E;
@@ -167,7 +169,7 @@
     background-color: rgba(255, 255, 255, 0.7);
 
 }
-.contacts-blocks{
+.contacts_blocks{
     width: 100%;
     height: 80%;
     display: flex;
@@ -176,7 +178,7 @@
     align-items: center;
 
 }
-.contact-block{
+.contact_block{
     margin-top: 50px;
     width: 420px;
     height: 350px;
@@ -185,7 +187,7 @@
     flex-direction: column;
     justify-content: center;
 }
-.contact-block-title{
+.contact_block_title{
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     cursor: default;
@@ -197,7 +199,7 @@
 /* .contact-block-text{
 
 } */
-.contact-block-text1{
+.contact_block_text1{
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     cursor: default;
@@ -207,7 +209,7 @@
     padding-bottom: 10px;
     padding-left: 50px;
 }
-.contact-block-text2{
+.contact_block_text2{
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     cursor: default;
